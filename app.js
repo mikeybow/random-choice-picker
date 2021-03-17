@@ -6,6 +6,7 @@ textarea.addEventListener('keyup', (e) => {
 
     if(e.key === 'Enter') {
         e.target.value = '';
+        
         randomSelect();
     }
 });
@@ -21,4 +22,37 @@ function createTags(input) {
 
         tagsEl.appendChild(tagEl);
     });
+}
+
+function randomSelect() {
+    const times = 30;
+
+    const interval = setInterval(() => {
+        const randomTag = pickRandomTag();
+        highlightTag(randomTag);
+
+        setTimeout(() => {
+            unhighlightTag(randomTag);
+        }, 100)
+    }, 100);
+
+    setTimeout(() => {
+        clearInterval(interval);
+
+        const randomTag = pickRandomTag();
+        highlightTag(randomTag);
+    }, times * 100)
+}
+
+function pickRandomTag() {
+    const tags = document.querySelectorAll('.tag');
+    return tags[Math.floor(Math.random() * tags.length)];
+}
+
+function highlightTag(tag) {
+    tag.classList.add('highlight');
+}
+
+function unhighlightTag(tag) {
+    tag.classList.remove('highlight');
 }
